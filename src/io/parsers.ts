@@ -48,14 +48,13 @@ class ReceiptParser implements Parser<string, Promise<Receipt>>  {
         return Tesseract.recognize(
             this.withExtendedImage(),
             'eng',
-            // uncomment for debugging { logger: m => console.log(m) }
+            // { logger: m => console.log(m) }
           ).then(({ data: { text } }) => {
             return Receipt.new(
                 this.receiptOriginalName,
                 text.split("\n").filter(s => {
                     return ReceiptParser.NUMERICAL_REGEX.test(s);
                 }),
-                "nobody, for now",
                 69.420
             );
           });
